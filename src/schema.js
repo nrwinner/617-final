@@ -39,6 +39,50 @@ const RootQuery = new GraphQLObjectType({
   }
 })
 
+// Mutations
+const mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addUser: {
+      type: UserType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parentValue, args) {
+        // Call interactor here to handle business logic
+        return axios.post('http://localhost:3000/users', {
+          name: args.name
+        }).then(res => res.data);
+      }
+    },
+    deleteUser: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parentValue, args) {
+        // Call interactor here to handle business logic
+        return axios.delete('http://localhost:3000/users/' + args.id)
+          .then(res => res.data);
+      }
+    },
+    updateUser: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLString) },
+        name: { type: GraphQLString }
+      },
+      resolve(parentValue, args) {
+        // Call interactor here to handle business logic
+        return axios.patch('http://localhost:3000/users/' + args.id, args)
+          .then(res => res.data);
+      }
+    }
+  }
+})
+
+
 module.exports = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation
 })
