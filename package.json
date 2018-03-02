@@ -1,0 +1,30 @@
+{
+  "name": "617-final",
+  "version": "0.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node_modules/.bin/nodemon src/app.js",
+    "json:server": "node_modules/.bin/json-server --watch assets/data.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nrwinner/617-final.git"
+  },
+  "keywords": [
+    "express",
+    "react",
+    "graphql",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nrwinner/617-final/issues"
+  },
+  "homepage": "https://github.com/nrwinner/617-final#readme",
+  "devDependencies": {
+    "nodemon": "^1.17.1"
+  }
+}
