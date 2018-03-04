@@ -72,8 +72,4 @@ const UserSchema = {
     }
 }
 
-module.exports.user = UserSchema.user;
-module.exports.users = UserSchema.users;
-module.exports.addUser = UserSchema.addUser;
-module.exports.deleteUser = UserSchema.deleteUser;
-module.exports.updateUser = UserSchema.updateUser;
+export { UserSchema }

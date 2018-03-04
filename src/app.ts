@@ -1,12 +1,12 @@
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
 
-var schema = require('./schema/schema')
+import { AppSchema } from "./schema/schema";
 
 var app = express();
 
 app.use('/graphql', graphqlHTTP({
-  schema: schema,
+  schema: AppSchema,
   graphiql: true,
 }));
 

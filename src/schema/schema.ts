@@ -7,7 +7,7 @@ const {
   GraphQLNonNull
 } = require('graphql');
 
-const UserSchema = require('./user.schema');
+import { UserSchema } from './user.schema';
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -28,7 +28,9 @@ const mutation = new GraphQLObjectType({
 })
 
 
-module.exports = new GraphQLSchema({
+const AppSchema = new GraphQLSchema({
   query: RootQuery,
   mutation
 })
+
+export { AppSchema }
