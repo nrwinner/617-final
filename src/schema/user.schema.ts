@@ -1,3 +1,6 @@
+import { DataStore } from "../interfaces/DataStore";
+import { getUser, getUsers, addUser, updateUser, deleteUser } from '../interactors/user.interactor';
+
 const {
   GraphQLObjectType,
   GraphQLString,
@@ -7,69 +10,71 @@ const {
   GraphQLNonNull
 } = require('graphql');
 
-const axios = require('axios');
-
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
     id: { type: GraphQLString },
     name: { type: GraphQLString }
   })
-})
+});
 
-const UserSchema = {
-  user: {
-    type: UserType,
-    args: {
-      id: { type: GraphQLString }
-    },
-    resolve(parentValue, args) {
-      return axios.get(`http://localhost:3000/users/${args.id}`)
-        .then(res => res.data);
-    }
-  },
-  users: {
-    type: new GraphQLList(UserType),
-    resolve(parentValue, args) {
-      return axios.get(`http://localhost:3000/users`)
-        .then(res => res.data);
-    }
-  },
-  addUser: {
+export class UserSchema {
+  user;
+  users;
+  addUser;
+  deleteUser;
+  updateUser;
+
+  constructor(private dataStore: DataStore) {
+    this.user = {
       type: UserType,
-      args: {
+        args: {
+        id: { type: GraphQLString }
+      },
+      resolve(parentValue, args) {
+        return getUser(dataStore, args.id);
+      }
+    };
+
+    this.users = {
+      type: new GraphQLList(UserType),
+        resolve(parentValue, args) {
+        return getUsers(dataStore);
+      }
+    };
+
+    this.addUser = {
+      type: UserType,
+        args: {
         name: { type: new GraphQLNonNull(GraphQLString) }
       },
       resolve(parentValue, args) {
         // Call interactor here to handle business logic
-        return axios.post('http://localhost:3000/users', {
-          name: args.name
-        }).then(res => res.data);
+        return addUser(dataStore, args.name);
       }
-    },
-    deleteUser: {
+    };
+
+    this.deleteUser = {
       type: UserType,
-      args: {
+        args: {
         id: { type: new GraphQLNonNull(GraphQLString) }
       },
       resolve(parentValue, args) {
         // Call interactor here to handle business logic
-        return axios.delete('http://localhost:3000/users/' + args.id)
-          .then(res => res.data);
+        return deleteUser(dataStore, args.id);
       }
-    },
-    updateUser: {
+    };
+
+    this.updateUser = {
       type: UserType,
-      args: {
+        args: {
         id: { type: new GraphQLNonNull(GraphQLString) },
         name: { type: GraphQLString }
       },
       resolve(parentValue, args) {
         // Call interactor here to handle business logic
-        return axios.patch('http://localhost:3000/users/' + args.id, args)
-          .then(res => res.data);
+        return updateUser(dataStore, args.id, args.name);
       }
-    }
+    };
+  }
 }
-
-export { UserSchema }

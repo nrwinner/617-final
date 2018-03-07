@@ -1,12 +1,15 @@
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
 
-import { AppSchema } from "./schema/schema";
+import { SchemaBuilder } from "./schema/schema";
+import { JsonStore } from './drivers/json-store';
 
 var app = express();
 
+const dataStore = new JsonStore();
+
 app.use('/graphql', graphqlHTTP({
-  schema: AppSchema,
+  schema: SchemaBuilder.buildSchema(dataStore),
   graphiql: true,
 }));
 
