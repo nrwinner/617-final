@@ -1,0 +1,26 @@
+@import 'src/_vars.scss';
+
+.section-item {
+    padding: 15px 20px;
+    font-weight: lighter;
+    cursor: pointer;
+    opacity: 0.5;
+
+    &:not(.complete):not(.active):hover {
+        color: $highlight;
+        opacity: 1;
+    }
+
+    &.complete {
+        color: rgba(255, 255, 255, 0.6);
+        background: #229252;
+        border-top-color: transparent;
+        cursor: default;
+    }
+
+    &.active {
+        background: $highlight-gradient;
+        cursor: default;
+        opacity: 1;
+    }
+}

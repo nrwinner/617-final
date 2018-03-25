@@ -1,3 +1,5 @@
 $dark-blue: #191927;
 $dark-gradient-blue: #212239;
 $lighter-blue: #323350;
+$highlight: rgb(0, 179, 255);
+$highlight-gradient: linear-gradient(45deg, darken($highlight, 15), lighten($highlight, 15));

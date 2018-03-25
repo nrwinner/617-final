@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import SectionItem from './SectionItem/SectionItem';
+import Sections from './Sections/Sections';
 // $FlowFixMe
 import './Sidebar.scss';
 
@@ -28,11 +28,7 @@ export default class Sidebar extends Component<{}> {
     render() {
         return (
             <div className='sidebar'>
-               {
-                   this.items.map((v, i) => {
-                       return <SectionItem data={v} key={i.toString()} />
-                   })
-               }
+               <Sections items={this.items} />
             </div>
         );
     }
