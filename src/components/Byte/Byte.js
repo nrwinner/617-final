@@ -45,7 +45,7 @@ export default class Byte extends Component<{}> {
 
                 return (
                     <div className='byte'>
-                        <Sidebar sections={data.byte.sections}/>
+                        <Sidebar data={data} />
                         <Content data={data} />
                     </div>
                 );

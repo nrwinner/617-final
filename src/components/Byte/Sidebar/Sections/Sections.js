@@ -10,7 +10,9 @@ import type { SectionItemType } from '@/types';
 import { byteState } from '../../services/ByteState';
 
 type Props = {
-    items: Array<SectionItemType>;
+    items: Array<SectionItemType>,
+    user: any,
+    title: string
 }
 
 type State = {
@@ -45,9 +47,10 @@ export default class Sections extends Component<Props, State> {
     }
 
     render() {
+        console.log(this.props.user);
         return (
             <div className='sections'>
-                <SectionHeader />
+                <SectionHeader user={this.props.user} title={this.props.title} />
                 {
                     this.props.items.map((v, i) => {
                         return <SectionItem data={v} key={i.toString()} active={this.state.active === v.name} changeSection={this.changeSection} />

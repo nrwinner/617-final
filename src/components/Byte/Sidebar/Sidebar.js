@@ -8,7 +8,7 @@ import './Sidebar.scss';
 import type { SectionItemType } from '@/types';
 
 type Props = {
-    sections: SectionItemType[]
+    data: any
 }
 
 export default class Sidebar extends Component<Props> {
@@ -19,14 +19,15 @@ export default class Sidebar extends Component<Props> {
     }
 
     componentWillMount() {
-        this.items = this.props.sections.map(x => { return {name: x.name}});
+        this.items = this.props.data.byte.sections.map(x => { return {name: x.name}});
+        console.log('test', this.items);
     }
 
 
     render() {
         return (
             <div className='sidebar'>
-               <Sections items={this.items} />
+               <Sections items={this.items} user={this.props.data.byte.creator} title={this.props.data.byte.name} />
             </div>
         );
     }
