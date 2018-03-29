@@ -8,7 +8,7 @@ import TableHero from './containers/Hero';
 import './Table.scss';
 
 export default class Table extends Component<{}> {
-  data;
+  data: any;
 
   constructor() {
     super()

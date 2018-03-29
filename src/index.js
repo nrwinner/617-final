@@ -14,7 +14,7 @@ import App from './App';
 
 const root = document.getElementById('root');
 const client = new ApolloClient({
-    uri: "http://localhost:4000"
+    uri: "https://softwarebytes.herokuapp.com"
 });
 
 if (root) {
