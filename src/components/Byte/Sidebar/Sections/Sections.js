@@ -7,7 +7,6 @@ import './Sections.scss';
 
 // Types
 import type { SectionItemType } from '@/types';
-import { byteState } from '../../services/ByteState';
 
 type Props = {
     items: Array<SectionItemType>,
@@ -29,7 +28,6 @@ export default class Sections extends Component<Props, State> {
             active: this.props.items.filter(i => !i.complete)[0].name
         };
 
-        byteState.active = this.state.active;
 
         (this:any).changeSection = this.changeSection.bind(this);
     }
@@ -37,13 +35,7 @@ export default class Sections extends Component<Props, State> {
     changeSection(name: string) {
         this.setState({
             active: name
-        }, () => {
-            byteState.active = this.state.active;
         });
-
-        setTimeout(() => {
-            console.log('from section', byteState.active);
-        }, 15000);
     }
 
     render() {

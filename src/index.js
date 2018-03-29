@@ -2,7 +2,6 @@
 // React
 import React from 'react';
 import ReactDOM from 'react-dom';
-import registerServiceWorker from './registerServiceWorker';
 
 // Apollo
 import ApolloClient from "apollo-boost";
@@ -23,7 +22,6 @@ if (root) {
             <App />
         </ApolloProvider>
     , root);
-    registerServiceWorker();
 } else {
     // error handling
     console.error('Where\'s your root element bruh?');

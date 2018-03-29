@@ -5,7 +5,6 @@ import Video from '../VideoComponent/Video';
 import './Content.scss';
 
 import type { VideoType } from '@/types';
-import { byteState } from '../services/ByteState';
 type Props = {
     data: any
 }
@@ -27,7 +26,7 @@ export default class Content extends Component<Props> {
 
         this.props.data.byte.sections.forEach(s => {
             console.log(s);
-            if (s.name === byteState.active) {
+            if (s.name === '') {
                 this.v.start = s.videoIn;
                 this.v.stop = s.videoOut;
                 return;
