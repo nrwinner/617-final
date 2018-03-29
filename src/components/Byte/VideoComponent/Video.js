@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 // $FlowFixMe
 import './Video.scss';
 
+// Types
+import type { VideoType } from '@/types';
+
 type Props = {
-    source: string,
-    start: string,
-    end?: string
+    source: VideoType
 }
 
 type State = {
@@ -35,11 +36,11 @@ export default class Video extends Component<Props, State> {
         if (this.state.playing) {
             return (
                 <div className='video'>
-                    <iframe width="800" height="450" src={makeSourceUrl(this.props.source, this.props.start, this.props.end)} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                    <iframe width="800" height="450" src={makeSourceUrl(this.props.source)} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
                 </div>
             )
         } else {
-            let bg = {backgroundImage: 'url(' + getVideoImageUrl(this.props.source) + ')'};
+            let bg = {backgroundImage: 'url(' + getVideoImageUrl(this.props.source.url) + ')'};
             return <div className='video'><div className="placeholder" onClick={this.loadVideo} style={bg}></div></div>;
         }
     }
@@ -50,8 +51,8 @@ export default class Video extends Component<Props, State> {
  * @param {*} start Time in format HH:MM:SS
  * @param {*} end Time in format HH:MM:SS
  */
-function makeSourceUrl(source: string, start: string, end?: string) {
-    let s = source + `?start=${makeTime(start)}` + (end ? `&end=${makeTime(end)}` : '');
+function makeSourceUrl(source: VideoType) {
+    let s = source.url + `?start=${makeTime(source.start)}` + (source.stop ? `&end=${makeTime(source.stop)}` : '');
     s += '&showinfo=0&autoplay=1'
     return s;
 }

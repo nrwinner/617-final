@@ -4,13 +4,38 @@ import Video from '../VideoComponent/Video';
 // $FlowFixMe
 import './Content.scss';
 
-export default class Content extends Component<{}> {
+import type { VideoType } from '@/types';
+import { byteState } from '../services/ByteState';
+type Props = {
+    data: any
+}
+
+export default class Content extends Component<Props> {
     // container component
+    v: VideoType;
+
+    componentWillReceiveProps(p: any) {
+        console.log('tester', p);
+    }
+
 
     render() {
+        this.v = {
+            url: this.props.data.byte.materials.youtubeVideo,
+            start: ''
+        };
+
+        this.props.data.byte.sections.forEach(s => {
+            console.log(s);
+            if (s.name === byteState.active) {
+                this.v.start = s.videoIn;
+                this.v.stop = s.videoOut;
+                return;
+            }
+        });
         return (
             <div className='content'>
-                <Video source={'https://www.youtube.com/embed/0fKg7e37bQE'} start={'00:10:12'} end = {'00:12:13'} />
+                <Video source={this.v} />
             </div>
         )
     }

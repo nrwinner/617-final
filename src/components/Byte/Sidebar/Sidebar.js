@@ -4,26 +4,24 @@ import Sections from './Sections/Sections';
 // $FlowFixMe
 import './Sidebar.scss';
 
-type SectionItemType = {
-    name: string,
-    complete?: boolean
+// Types
+import type { SectionItemType } from '@/types';
+
+type Props = {
+    sections: SectionItemType[]
 }
 
-export default class Sidebar extends Component<{}> {
+export default class Sidebar extends Component<Props> {
     items: Array<SectionItemType>;
 
     constructor() {
         super();
-
-        this.items = [
-            {name: 'Section 1', complete: true},
-            {name: 'Section 2'},
-            {name: 'Section 3'},
-            {name: 'Section 4'},
-            {name: 'Section 5'},
-            {name: 'Section 6'},
-        ];
     }
+
+    componentWillMount() {
+        this.items = this.props.sections.map(x => { return {name: x.name}});
+    }
+
 
     render() {
         return (

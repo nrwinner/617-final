@@ -5,10 +5,9 @@ import SectionHeader from './SectionHeader/SectionHeader';
 // $FlowFixMe
 import './Sections.scss';
 
-type SectionItemType = {
-    name: string,
-    complete?: boolean
-}
+// Types
+import type { SectionItemType } from '@/types';
+import { byteState } from '../../services/ByteState';
 
 type Props = {
     items: Array<SectionItemType>;
@@ -28,13 +27,21 @@ export default class Sections extends Component<Props, State> {
             active: this.props.items.filter(i => !i.complete)[0].name
         };
 
+        byteState.active = this.state.active;
+
         (this:any).changeSection = this.changeSection.bind(this);
     }
 
     changeSection(name: string) {
         this.setState({
             active: name
-        })
+        }, () => {
+            byteState.active = this.state.active;
+        });
+
+        setTimeout(() => {
+            console.log('from section', byteState.active);
+        }, 15000);
     }
 
     render() {
