@@ -10,17 +10,25 @@ import { ApolloProvider } from "react-apollo";
 // Root Component
 import App from './App';
 
+// Redux
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { appReducer } from './reducers'
+
+const store = createStore(appReducer);
 
 const root = document.getElementById('root');
 const client = new ApolloClient({
-    uri: "https://softwarebytes.herokuapp.com"
+    uri: "http://localhost:4000"
 });
 
 if (root) {
     ReactDOM.render(
-        <ApolloProvider client={client}>
-            <App />
-        </ApolloProvider>
+        <Provider store={store}>
+            <ApolloProvider client={client}>
+                <App />
+            </ApolloProvider>
+        </Provider>
     , root);
 } else {
     // error handling

@@ -1,55 +1,60 @@
 // @flow
-import React, { Component } from 'react';
+import React from 'react';
 import Sidebar from './Sidebar/Sidebar';
 import Content from './Content/Content';
+import { Loader } from '../Loader/Loader'
+
+// Redux
+import { connect } from 'react-redux';
+import { initConsumableByte } from '../../actions';
+
+// Apollo
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 // $FlowFixMe
 import './Byte.scss';
 
-// Types
-import type { VideoType } from '@/types';
+const Byte = ({ dispatch }) => {
 
-export default class Byte extends Component<{}> {
-    query: string;
-
-    constructor() {
-        super();
-        this.query = `query {
-            byte(id: "1") {
+    let query = `query {
+        byte(id: "1") {
+          name,
+          description,
+          date,
+          creator {
+            name
+          },
+          materials {
+            youtubeVideo
+          },
+          sections {
+              id,
               name,
               description,
-              date,
-              creator {
-                name
-              },
-              materials {
-                youtubeVideo
-              },
-              sections {
-                name,
-                description,
-                videoIn,
-                videoOut
-              },
-            }
-          }`;
-    }
-
-    render() {
-        return <Query query={gql`${this.query}`}>
+              videoIn,
+              videoOut
+          },
+        }
+      }`;
+    
+    return (
+        <Query query={gql`${query}`}>
             {({loading, error, data}) => {
-                if (loading) return <p>loading...</p>;
+    if (loading) return <Loader text='Loading byte...' />;
                 if (error) return <p>Error :( {error}</p>;
+
+                dispatch(initConsumableByte(data.byte));
 
                 return (
                     <div className='byte'>
-                        <Sidebar data={data} />
-                        <Content data={data} />
+                        <Sidebar />
+                        <Content />
                     </div>
                 );
             }}
-        </Query>;
-    }
+        </Query>
+    );
 }
+
+export default connect()(Byte);

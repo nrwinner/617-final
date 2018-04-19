@@ -30,7 +30,7 @@ export default class Video extends Component<Props, State> {
         this.setState({
             playing: true
         })
-}
+    }
 
     render() {
         if (this.state.playing) {
