@@ -5,35 +5,29 @@ import Sections from './Sections/Sections';
 import './Sidebar.scss';
 
 // Types
-import type { SectionItemType } from '@/types';
+import type { SectionType, SectionItemType } from '@/types';
 
 // Redux
 import { byteChangeSection } from '../../../actions';
 import { connect } from 'react-redux';
 
 type Props = {
-    sections: any;
+    sections: Map<string, SectionType>;
     creator: string;
     name: string;
     changeSection: Function;
 }
 
 class Sidebar extends Component<Props> {
-    items: Array<SectionItemType>;
 
     constructor() {
         super();
     }
 
-    componentWillMount() {
-        this.items = this.props.sections.map(x => { return {name: x.name}});
-    }
-
-
     render() {
         return (
             <div className='sidebar'>
-               <Sections items={this.items} user={this.props.creator} title={this.props.name} changeSection={this.props.changeSection} />
+               <Sections sections={this.props.sections} user={this.props.creator} title={this.props.name} changeSection={this.props.changeSection} />
             </div>
         );
     }
@@ -46,7 +40,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    changeSection: (name: string) => dispatch(byteChangeSection(name))
+    changeSection: (id: string) => dispatch(byteChangeSection(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

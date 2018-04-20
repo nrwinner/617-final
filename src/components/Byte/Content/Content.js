@@ -1,52 +1,58 @@
 // @flow
 import React, { Component } from 'react';
 import Video from '../VideoComponent/Video';
+import Quiz from '../../Quiz/Quiz';
 // $FlowFixMe
 import './Content.scss';
 
-import type { VideoType } from '@/types';
+import type { ByteType, VideoType, SectionType, QuestionType } from '@/types';
 
 // Redux
 import { connect } from 'react-redux';
 
 type Props = {
-    activeSection: any;
-    byte: any;
+    activeSection: string;
+    byte: ByteType;
 }
 
 class Content extends Component<Props> {
     // container component
-    v: VideoType;
+    section: SectionType; // active section
+    video: VideoType;
 
     constructor(p: Props) {
         super(p);
-        this.initVideo(this.props.activeSection);
+        this.initContent(this.props.activeSection);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.initVideo(nextProps.activeSection);
+        this.initContent(nextProps.activeSection);
     }
 
 
     render() {
-
         return (
             <div className='content'>
-                <Video source={this.v} />
+                <Video source={this.video} />
+                <div className="quiz-wrapper">
+                    <Quiz questions={this.section.questions} /> 
+                </div>
             </div>
         );
     }
 
-    initVideo(section) {
-        this.v = {
+    initContent(section) {
+        this.video = {
             url: this.props.byte.materials.youtubeVideo,
             start: ''
         };
 
-
-        let s = this.props.byte.sections.filter(x => x.name === section)[0];
-        this.v.start = s.videoIn;
-        this.v.stop = s.videoOut;
+        // $FlowFixMe
+        this.section = this.props.byte.sections.get(section);
+        // $FlowFixMe
+        this.video.start = this.section.videoIn;
+        // $FlowFixMe
+        this.video.stop = this.section.videoOut;
     }
 }
 

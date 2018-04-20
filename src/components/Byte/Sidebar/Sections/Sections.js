@@ -4,14 +4,14 @@ import SectionItem from './SectionItem/SectionItem'
 import SectionHeader from './SectionHeader/SectionHeader';
 
 // Types
-import type { SectionItemType } from '@/types';
+import type { SectionType, SectionItemType } from '@/types';
 
 // Redux
 import { connect } from 'react-redux';
 import { byteChangeSection } from '../../../../actions';
 
 type Props = {
-    items: Array<SectionItemType>;
+    sections: Map<string, SectionType>;
     user: any;
     title: string;
     active: string;
@@ -29,8 +29,8 @@ class Sections extends Component<Props> {
             <div className='sections'>
                 <SectionHeader user={this.props.user} title={this.props.title} />
                 {
-                    this.props.items.map((v, i) => {
-                        return <SectionItem data={v} key={i.toString()} active={this.props.active === v.name} changeSection={this.props.changeSection} />
+                     Array.from(this.props.sections, ([key, value]) => value).map((v, i) => {
+                        return <SectionItem data={v} key={i.toString()} active={this.props.active === v.id} changeSection={this.props.changeSection} />
                     })
                 }
             </div>
